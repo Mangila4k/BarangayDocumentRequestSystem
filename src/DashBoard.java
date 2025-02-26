@@ -1,5 +1,5 @@
-package dashboard;
 
+import java.awt.Color;
 
 public class DashBoard extends javax.swing.JFrame {
 
@@ -17,6 +17,9 @@ public class DashBoard extends javax.swing.JFrame {
         // Set the user's name in the JLabel (ctn)
         ctn.setText("Welcome, " + userName + "!");
     }
+        Color navcolor = new Color(204,204,204);
+        Color headcolor = new Color(0,153,153);
+        Color bodycolor = new Color(0,102,102); 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,6 +40,7 @@ public class DashBoard extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        lg = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -98,6 +102,23 @@ public class DashBoard extends javax.swing.JFrame {
         jLabel3.setText("Citizen");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 50, 30));
 
+        lg.setBackground(new java.awt.Color(0, 102, 102));
+        lg.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lg.setForeground(new java.awt.Color(240, 240, 240));
+        lg.setText("LOGOUT");
+        lg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lgMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lgMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lgMouseExited(evt);
+            }
+        });
+        jPanel2.add(lg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 100, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,6 +152,22 @@ public class DashBoard extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_closeMouseClicked
 
+    private void lgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgMouseClicked
+        this.dispose(); // Close the current dashboard window
+    
+    // Open the LoginForm
+    LoginForm loginForm = new LoginForm();
+    loginForm.setVisible(true);
+    }//GEN-LAST:event_lgMouseClicked
+
+    private void lgMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgMouseEntered
+        lg.setBackground(bodycolor);
+    }//GEN-LAST:event_lgMouseEntered
+
+    private void lgMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgMouseExited
+
+    }//GEN-LAST:event_lgMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -150,6 +187,7 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JButton lg;
     private javax.swing.JLabel minimize;
     // End of variables declaration//GEN-END:variables
 }
