@@ -84,7 +84,6 @@ public class createaccount extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         ln = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -92,7 +91,6 @@ public class createaccount extends javax.swing.JFrame {
         fn = new javax.swing.JTextField();
         gd = new javax.swing.JComboBox<>();
         un = new javax.swing.JTextField();
-        cancel = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -104,6 +102,7 @@ public class createaccount extends javax.swing.JFrame {
         cps = new javax.swing.JPasswordField();
         ps = new javax.swing.JPasswordField();
         jLabel18 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
 
@@ -149,32 +148,23 @@ public class createaccount extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-removebg-preview.png"))); // NOI18N
-        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, 80));
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, 80));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel2.setText("WELCOME!");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, -1, 30));
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, 30));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel3.setText("Join Our Barangay System Today!");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, 20));
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, 20));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setText("Create your account now to stay connected,");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, 20));
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, 20));
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel5.setText(" access services, and make your community better.");
-        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 20));
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel7.setText("Already hava an account? Sign up");
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel7MouseClicked(evt);
-            }
-        });
-        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, 20));
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 20));
 
         ln.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -186,13 +176,13 @@ public class createaccount extends javax.swing.JFrame {
                 lnActionPerformed(evt);
             }
         });
-        jPanel4.add(ln, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 150, 30));
+        jPanel4.add(ln, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 150, 30));
 
         jPanel5.setBackground(new java.awt.Color(204, 255, 255, 80));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sktinaan-removebg-preview.png"))); // NOI18N
-        jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 520, -1));
+        jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 520, -1));
 
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 590, 500));
 
@@ -206,14 +196,14 @@ public class createaccount extends javax.swing.JFrame {
                 cnActionPerformed(evt);
             }
         });
-        jPanel4.add(cn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 150, 30));
+        jPanel4.add(cn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 150, 30));
 
         fn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 fnMouseClicked(evt);
             }
         });
-        jPanel4.add(fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 150, 30));
+        jPanel4.add(fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 150, 30));
 
         gd.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         gd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
@@ -223,58 +213,49 @@ public class createaccount extends javax.swing.JFrame {
                 gdMouseClicked(evt);
             }
         });
-        jPanel4.add(gd, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 150, 30));
+        jPanel4.add(gd, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 150, 30));
 
         un.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 unMouseClicked(evt);
             }
         });
-        jPanel4.add(un, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, 150, 30));
-
-        cancel.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        cancel.setText("Cancel");
-        cancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cancelMouseClicked(evt);
-            }
-        });
-        jPanel4.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, -1, -1));
+        jPanel4.add(un, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 150, 30));
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(240, 240, 240));
         jLabel10.setText("Last Name:");
-        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
+        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(240, 240, 240));
         jLabel11.setText("Gender:");
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(240, 240, 240));
         jLabel12.setText("Contact:");
-        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
+        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(240, 240, 240));
         jLabel13.setText("UserName:");
-        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
+        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(240, 240, 240));
         jLabel14.setText("Password:");
-        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, -1));
+        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(240, 240, 240));
         jLabel15.setText("First Name:");
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(240, 240, 240));
         jLabel16.setText("Confirm");
-        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, -1, 30));
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, -1, 30));
 
         create.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         create.setText("Create");
@@ -283,26 +264,40 @@ public class createaccount extends javax.swing.JFrame {
                 createMouseClicked(evt);
             }
         });
-        jPanel4.add(create, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, -1, -1));
+        create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createActionPerformed(evt);
+            }
+        });
+        jPanel4.add(create, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, -1, -1));
 
         cps.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cpsMouseClicked(evt);
             }
         });
-        jPanel4.add(cps, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, 150, 30));
+        jPanel4.add(cps, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, 150, 30));
 
         ps.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 psMouseClicked(evt);
             }
         });
-        jPanel4.add(ps, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 150, 30));
+        jPanel4.add(ps, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 150, 30));
 
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(240, 240, 240));
         jLabel18.setText("Password:");
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, -1, 20));
+        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, -1, 20));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setText("Already hava an account? Sign up");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, 20));
 
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 500));
 
@@ -394,13 +389,6 @@ public class createaccount extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_createMouseClicked
 
-    private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
-        // Go back to the LoginForm
-        LoginForm loginForm = new LoginForm();
-        loginForm.setVisible(true);
-        this.dispose(); // Close the current window
-    }//GEN-LAST:event_cancelMouseClicked
-
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         LoginForm loginForm = new LoginForm();
         loginForm.setVisible(true);
@@ -436,6 +424,10 @@ public class createaccount extends javax.swing.JFrame {
     private void cpsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cpsMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_cpsMouseClicked
+
+    private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createActionPerformed
 
     /**
      * @param args the command line arguments
@@ -473,7 +465,6 @@ public class createaccount extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancel;
     private javax.swing.JLabel close;
     private javax.swing.JTextField cn;
     private javax.swing.JPasswordField cps;

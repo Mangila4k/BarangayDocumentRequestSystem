@@ -195,55 +195,109 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_lgMouseExited
 
     private void lgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgMouseClicked
-        String username = un.getText().trim();
-        String password = new String(ps.getPassword()).trim();
+    String username = un.getText().trim();
+    String password = new String(ps.getPassword()).trim();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter your username and password!", "Input Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+    if (username.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter your username and password!", "Input Error", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        dbConnector dbc = new dbConnector();
-        Connection conn = dbc.getConnection();
+    dbConnector dbc = new dbConnector();
+    Connection conn = dbc.getConnection();
 
-        if (conn == null) {
-            JOptionPane.showMessageDialog(this, "Database connection failed!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (conn == null) {
+        JOptionPane.showMessageDialog(this, "Database connection failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        try {
-            String sql = "SELECT first_name, password FROM users WHERE username = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            ResultSet rs = pstmt.executeQuery();
+    try {
+        // Modify SQL to check for approval_status as well
+        String sql = "SELECT first_name, password, usertype, approval_status FROM users WHERE username = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, username);
+        ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
-                validateLogin(rs, password);
-                return;
+        if (rs.next()) {
+            // User found, retrieve approval_status and user type
+            String firstName = rs.getString("first_name");
+            String dbPassword = rs.getString("password");
+            String userType = rs.getString("usertype");
+            String approvalStatus = rs.getString("approval_status");
+
+            // Check if the user is approved
+            if (!"approved".equals(approvalStatus)) {
+                JOptionPane.showMessageDialog(this, "Your account is not approved! Please contact an admin.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                return;  // Don't proceed with login if not approved
             }
 
+            // Hash the input password to compare
+            String hashedInputPassword = hashPassword(password);
+            boolean isDbPasswordHashed = dbPassword.length() == 64 && dbPassword.matches("[0-9a-fA-F]{64}");
+            boolean passwordMatches = isDbPasswordHashed ? hashedInputPassword.equals(dbPassword) : password.equals(dbPassword);
+
+            if (passwordMatches) {
+                // Login successful, check user type
+                if (userType.equals("admin")) {
+                    // If user is an admin, go to SuperAdminDashboard
+                    JOptionPane.showMessageDialog(this, "Login Successful! Welcome, " + firstName, "Success", JOptionPane.INFORMATION_MESSAGE);
+                    SuperAdminDashboard adminDash = new SuperAdminDashboard();
+                    this.dispose();
+                    adminDash.setVisible(true);
+                } else if (userType.equals("user")) {
+                    // If user is a normal user, go to DashBoard
+                    JOptionPane.showMessageDialog(this, "Login Successful! Welcome, " + firstName, "Success", JOptionPane.INFORMATION_MESSAGE);
+                    DashBoard citizenDash = new DashBoard(firstName); // You can pass the user's first name to the dashboard if needed
+                    this.dispose();
+                    citizenDash.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid user type!", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
             JOptionPane.showMessageDialog(this, "User not found!", "Login Error", JOptionPane.ERROR_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
 
     private void validateLogin(ResultSet rs, String inputPassword) throws SQLException {
-        String firstName = rs.getString("first_name");
         String dbPassword = rs.getString("password");
-        String hashedInputPassword = hashPassword(inputPassword);
+    String hashedInputPassword = hashPassword(inputPassword);
 
-        boolean isDbPasswordHashed = dbPassword.length() == 64 && dbPassword.matches("[0-9a-fA-F]{64}");
-        boolean passwordMatches = isDbPasswordHashed ? hashedInputPassword.equals(dbPassword) : inputPassword.equals(dbPassword);
+    boolean isDbPasswordHashed = dbPassword.length() == 64 && dbPassword.matches("[0-9a-fA-F]{64}");
+    boolean passwordMatches = isDbPasswordHashed ? hashedInputPassword.equals(dbPassword) : inputPassword.equals(dbPassword);
 
-        if (passwordMatches) {
-            JOptionPane.showMessageDialog(this, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            new DashBoard(firstName).setVisible(true); // Pass user's name
-            this.dispose();
+    if (passwordMatches) {
+        String firstName = rs.getString("first_name");  // Get user's first name from the result set
+        String userType = rs.getString("usertype");     // Get the usertype from the result set
+        
+        // Show a login success message
+        JOptionPane.showMessageDialog(this, "Login Successful! Welcome, " + firstName, "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        // Check user type and navigate to respective dashboard
+        if (userType.equals("admin")) {
+            // Admin user - Go to SuperAdminDashboard
+            SuperAdminDashboard adminDash = new SuperAdminDashboard();
+            this.dispose();  // Close the login form
+            adminDash.setVisible(true);  // Show the SuperAdminDashboard
+        } else if (userType.equals("user")) {
+            // Regular user - Go to DashBoard
+            DashBoard citizenDash = new DashBoard(firstName);  // Pass first name to the dashboard if needed
+            this.dispose();  // Close the login form
+            citizenDash.setVisible(true);  // Show the DashBoard
         } else {
-            JOptionPane.showMessageDialog(this, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
+            // Handle other user types if needed
+            JOptionPane.showMessageDialog(this, "Unknown user type!", "Login Error", JOptionPane.ERROR_MESSAGE);
         }
+    } else {
+        // Incorrect password
+        JOptionPane.showMessageDialog(this, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
     }
+}
 
 // Function to verify login and redirect
 private void validateLogin(ResultSet rs, String inputPassword, String userType) throws SQLException {
