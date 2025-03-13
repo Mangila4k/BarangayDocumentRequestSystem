@@ -3,9 +3,7 @@ import config.dbConnector;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
 
@@ -61,8 +59,8 @@ public class Citizen extends javax.swing.JFrame {
         add = new javax.swing.JButton();
         edit = new javax.swing.JButton();
         delete = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         ref = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         bdr = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -115,8 +113,16 @@ public class Citizen extends javax.swing.JFrame {
         search.setText("SEARCH");
         search.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 searchMouseEntered(evt);
+            }
+        });
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
             }
         });
         jPanel3.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 80, 30));
@@ -166,10 +172,6 @@ public class Citizen extends javax.swing.JFrame {
         });
         jPanel3.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 90, 30));
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField1.setOpaque(false);
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(539, 10, 150, 30));
-
         ref.setBackground(new java.awt.Color(0, 153, 153));
         ref.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         ref.setForeground(new java.awt.Color(240, 240, 240));
@@ -184,6 +186,10 @@ public class Citizen extends javax.swing.JFrame {
             }
         });
         jPanel3.add(ref, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 90, 30));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 160, 30));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 50));
 
@@ -447,6 +453,14 @@ public class Citizen extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_deleteMouseClicked
 
+    private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseClicked
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -496,11 +510,11 @@ public class Citizen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton lg;
     private javax.swing.JLabel minimize;
     private javax.swing.JButton ref;

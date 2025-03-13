@@ -1,3 +1,4 @@
+import config.Session;
 import config.dbConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -195,78 +196,69 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_lgMouseExited
 
     private void lgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgMouseClicked
-        String username = un.getText().trim();
-        String password = new String(ps.getPassword()).trim();
+    String username = un.getText().trim();
+    String password = new String(ps.getPassword()).trim();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter your username and password!", "Input Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        dbConnector dbc = new dbConnector();
-        Connection conn = dbc.getConnection();
-
-        if (conn == null) {
-            JOptionPane.showMessageDialog(this, "Database connection failed!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try {
-            String sql = "SELECT first_name, password FROM users WHERE username = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                validateLogin(rs, password);
-                return;
-            }
-
-            JOptionPane.showMessageDialog(this, "User not found!", "Login Error", JOptionPane.ERROR_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    if (username.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter your username and password!", "Input Error", JOptionPane.WARNING_MESSAGE);
+        return;
     }
 
-    private void validateLogin(ResultSet rs, String inputPassword) throws SQLException {
-        String firstName = rs.getString("first_name");
-        String dbPassword = rs.getString("password");
-        String hashedInputPassword = hashPassword(inputPassword);
+    dbConnector dbc = new dbConnector();
+    Connection conn = dbc.getConnection();
 
-        boolean isDbPasswordHashed = dbPassword.length() == 64 && dbPassword.matches("[0-9a-fA-F]{64}");
-        boolean passwordMatches = isDbPasswordHashed ? hashedInputPassword.equals(dbPassword) : inputPassword.equals(dbPassword);
-
-        if (passwordMatches) {
-            JOptionPane.showMessageDialog(this, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            new DashBoard(firstName).setVisible(true); // Pass user's name
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
-        }
+    if (conn == null) {
+        JOptionPane.showMessageDialog(this, "Database connection failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
-// Function to verify login and redirect
-private void validateLogin(ResultSet rs, String inputPassword, String userType) throws SQLException {
-    String dbPassword = rs.getString("password");
-    String hashedInputPassword = hashPassword(inputPassword);
+    try {
+        // Fetch user details
+        String sql = "SELECT id, first_name, password, user_type, status FROM users WHERE username = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, username);
+        ResultSet rs = pstmt.executeQuery();
 
-    boolean isDbPasswordHashed = dbPassword.length() == 64 && dbPassword.matches("[0-9a-fA-F]{64}");
-    boolean passwordMatches = isDbPasswordHashed ? hashedInputPassword.equals(dbPassword) : inputPassword.equals(dbPassword);
+        if (rs.next()) {
+            String userId = rs.getString("id"); // Get logged-in user's ID
+            String firstName = rs.getString("first_name");
+            String dbPassword = rs.getString("password");
+            String userType = rs.getString("user_type"); 
+            String status = rs.getString("status");  
+            String hashedInputPassword = hashPassword(password);
 
-    if (passwordMatches) {
-        JOptionPane.showMessageDialog(this, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        
-        if (userType.equals("admin")) {
-            SuperAdminDashboard adminDash = new SuperAdminDashboard();
-            this.dispose();
-            adminDash.setVisible(true);
-        } else {
-            DashBoard citizenDash = new DashBoard();
-            this.dispose();
-            citizenDash.setVisible(true);
-        }
+            boolean isDbPasswordHashed = dbPassword.length() == 64 && dbPassword.matches("[0-9a-fA-F]{64}");
+            boolean passwordMatches = isDbPasswordHashed ? hashedInputPassword.equals(dbPassword) : password.equals(dbPassword);
+
+            if (passwordMatches) {
+    if (status.equalsIgnoreCase("Inactive")) {  
+        JOptionPane.showMessageDialog(this, "Your account is pending approval. Please wait for admin approval.", "Account Pending", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    JOptionPane.showMessageDialog(this, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+    // Store user details in the Session
+    Session.getInstance().setID(userId);
+    Session.getInstance().setFirst_name(firstName);
+
+    // Redirect based on user type
+    if (userType.equalsIgnoreCase("Admin")) {
+        SuperAdminDashboard adminDash = new SuperAdminDashboard();
+        adminDash.setVisible(true);
     } else {
-        JOptionPane.showMessageDialog(this, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
+        DashBoard citizenDash = new DashBoard(userId, firstName); // Pass userId and firstName
+        citizenDash.setVisible(true);
+    }
+
+    this.dispose();
+    return;
+}
+        }
+
+        JOptionPane.showMessageDialog(this, "Invalid username or password!", "Login Error", JOptionPane.ERROR_MESSAGE);
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_lgMouseClicked
 

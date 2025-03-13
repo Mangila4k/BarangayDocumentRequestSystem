@@ -1,8 +1,19 @@
 
+import config.Session;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 public class DashBoard extends javax.swing.JFrame {
+    private String userId; // Store logged-in user ID
 
+    public DashBoard(String userId, String userName) {
+        this.userId = userId; // Store the logged-in user ID
+    initComponents();
+    setTitle("Citizen Dashboard");
+
+    // Set the user's name in the JLabel (ctn)
+    ctn.setText("Welcome, " + userName + "!");
+}
     /**
      * Creates new form CitizenPage
      */
@@ -36,11 +47,16 @@ public class DashBoard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         ctn = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lg = new javax.swing.JButton();
+        pfl = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -79,11 +95,14 @@ public class DashBoard extends javax.swing.JFrame {
         ctn.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         ctn.setForeground(new java.awt.Color(240, 240, 240));
         ctn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel4.add(ctn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 760, 30));
+        jPanel4.add(ctn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 760, 30));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 50));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 50));
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 780, 480));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sktinaan-removebg-preview - Copy.png"))); // NOI18N
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 420, 400));
+
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 790, 480));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,7 +136,63 @@ public class DashBoard extends javax.swing.JFrame {
                 lgMouseExited(evt);
             }
         });
-        jPanel2.add(lg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 100, -1));
+        lg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lgActionPerformed(evt);
+            }
+        });
+        jPanel2.add(lg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 100, -1));
+
+        pfl.setBackground(new java.awt.Color(0, 102, 102));
+        pfl.setForeground(new java.awt.Color(240, 240, 240));
+        pfl.setText("PROFILE");
+        pfl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pflMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pflMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pflMouseExited(evt);
+            }
+        });
+        pfl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pflActionPerformed(evt);
+            }
+        });
+        jPanel2.add(pfl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 120, 30));
+
+        jButton1.setBackground(new java.awt.Color(0, 102, 102));
+        jButton1.setForeground(new java.awt.Color(240, 240, 240));
+        jButton1.setText("DOCUMENTS");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 120, 30));
+
+        jButton4.setBackground(new java.awt.Color(0, 102, 102));
+        jButton4.setForeground(new java.awt.Color(240, 240, 240));
+        jButton4.setText("ACCOUNTS");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 120, 30));
+
+        jButton2.setBackground(new java.awt.Color(0, 102, 102));
+        jButton2.setForeground(new java.awt.Color(240, 240, 240));
+        jButton2.setText("STATUS");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 120, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,8 +240,53 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_lgMouseEntered
 
     private void lgMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgMouseExited
-
+        lg.setBackground(navcolor);
     }//GEN-LAST:event_lgMouseExited
+
+    private void lgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lgActionPerformed
+
+    private void pflMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pflMouseClicked
+    String userId = Session.getInstance().getID(); 
+
+    if (userId == null || userId.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Error: User ID not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    new UserProfile(userId).setVisible(true); // Pass the user ID correctly
+    }//GEN-LAST:event_pflMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        Documents docs = new Documents();
+        this.dispose();
+        docs.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        Accounts acc = new Accounts();
+        this.dispose();
+        acc.setVisible(true);
+    }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        Status sts = new Status();
+        this.dispose();
+        sts.setVisible(true);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void pflActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pflActionPerformed
+        
+    }//GEN-LAST:event_pflActionPerformed
+
+    private void pflMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pflMouseExited
+        lg.setBackground(navcolor);
+    }//GEN-LAST:event_pflMouseExited
+
+    private void pflMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pflMouseEntered
+        lg.setBackground(bodycolor);
+    }//GEN-LAST:event_pflMouseEntered
 
     /**
      * @param args the command line arguments
@@ -180,14 +300,19 @@ public class DashBoard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel close;
     private javax.swing.JLabel ctn;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton lg;
     private javax.swing.JLabel minimize;
+    private javax.swing.JButton pfl;
     // End of variables declaration//GEN-END:variables
 }

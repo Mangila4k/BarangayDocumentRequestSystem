@@ -1,5 +1,11 @@
 
+import config.dbConnector;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import net.proteanit.sql.DbUtils;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,6 +25,19 @@ public class Documents extends javax.swing.JFrame {
     public Documents() {
         initComponents();
     }
+    
+    private static documentsform addFormInstance = null; // Track the Add form instance
+    
+    public void displayData() {
+            try {
+        dbConnector dbc = new dbConnector();
+        ResultSet rs = dbc.getData("SELECT * FROM tbl_documents");
+        dcm.setModel(DbUtils.resultSetToTableModel(rs)); // Refresh table
+        rs.close();
+    } catch (SQLException ex) {
+        System.out.println("Errors: " + ex.getMessage());
+    }
+}
         Color navcolor = new Color(204,204,204);
         Color headcolor = new Color(0,153,153);
         Color bodycolor = new Color(0,102,102);
@@ -35,6 +54,15 @@ public class Documents extends javax.swing.JFrame {
         minimize = new javax.swing.JLabel();
         close = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        search = new javax.swing.JButton();
+        add = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
+        ref = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dcm = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -75,15 +103,112 @@ public class Documents extends javax.swing.JFrame {
         });
         jPanel2.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 10, 30, 30));
 
+        jPanel3.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        search.setBackground(new java.awt.Color(0, 153, 153));
+        search.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        search.setForeground(new java.awt.Color(240, 240, 240));
+        search.setText("SEARCH");
+        search.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                searchMouseEntered(evt);
+            }
+        });
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        jPanel3.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 80, 30));
+
+        add.setBackground(new java.awt.Color(0, 153, 153));
+        add.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        add.setForeground(new java.awt.Color(240, 240, 240));
+        add.setText("ADD");
+        add.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addMouseEntered(evt);
+            }
+        });
+        jPanel3.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 90, 30));
+
+        edit.setBackground(new java.awt.Color(0, 153, 153));
+        edit.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        edit.setForeground(new java.awt.Color(240, 240, 240));
+        edit.setText("EDIT");
+        edit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        edit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editMouseEntered(evt);
+            }
+        });
+        jPanel3.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 90, 30));
+
+        delete.setBackground(new java.awt.Color(0, 153, 153));
+        delete.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        delete.setForeground(new java.awt.Color(240, 240, 240));
+        delete.setText("DELETE");
+        delete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteMouseEntered(evt);
+            }
+        });
+        jPanel3.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 90, 30));
+
+        ref.setBackground(new java.awt.Color(0, 153, 153));
+        ref.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        ref.setForeground(new java.awt.Color(240, 240, 240));
+        ref.setText("REFRESH");
+        ref.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        ref.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                refMouseEntered(evt);
+            }
+        });
+        jPanel3.add(ref, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 90, 30));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 10, 160, 30));
+
+        dcm.setToolTipText("");
+        jScrollPane1.setViewportView(dcm);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 790, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 790, 480));
@@ -234,6 +359,99 @@ public class Documents extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lgMouseExited
 
+    private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseClicked
+
+    private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
+        search.setBackground(bodycolor);
+    }//GEN-LAST:event_searchMouseEntered
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
+    if (addFormInstance != null) {
+        addFormInstance.dispose(); // Close the previous Add form
+    }
+
+    addFormInstance = new documentsform(); // Create a new instance
+    addFormInstance.action = "Add"; // Ensure action is set
+    addFormInstance.setVisible(true);
+    }//GEN-LAST:event_addMouseClicked
+
+    private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
+        add.setBackground(bodycolor);
+    }//GEN-LAST:event_addMouseEntered
+
+    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
+    int rowindex = dcm.getSelectedRow();
+
+    if (rowindex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select a document to edit.");
+        return;
+    }
+
+    TableModel model = dcm.getModel();
+    documentsform dcmForm = new documentsform(); // Always create a new instance
+    
+    // Ensure action is set to "Update"
+    dcmForm.action = "Update"; 
+
+    // Set data into the fields
+    dcmForm.did.setText(model.getValueAt(rowindex, 0).toString());
+    dcmForm.dtype.setText(model.getValueAt(rowindex, 1).toString());
+    dcmForm.dprice.setText(model.getValueAt(rowindex, 2).toString());
+
+    dcmForm.setVisible(true);
+    }//GEN-LAST:event_editMouseClicked
+
+    private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
+        edit.setBackground(bodycolor);
+    }//GEN-LAST:event_editMouseEntered
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+        int rowindex = dcm.getSelectedRow();
+
+    if (rowindex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select a document to delete!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    TableModel model = dcm.getModel();
+    String documentId = model.getValueAt(rowindex, 0).toString(); // Get selected document's ID
+
+    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this document?",
+            "Delete Confirmation", JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        dbConnector dbc = new dbConnector();
+        String sql = "DELETE FROM tbl_documents WHERE d_id = " + documentId;
+
+        int result = dbc.insertData(sql); // Execute delete query
+
+        if (result == 1) {
+            JOptionPane.showMessageDialog(null, "Document deleted successfully!");
+            displayData(); // Refresh the table after deletion
+        } else {
+            JOptionPane.showMessageDialog(null, "Error deleting document!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }//GEN-LAST:event_deleteMouseClicked
+
+    private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
+        delete.setBackground(bodycolor);
+    }//GEN-LAST:event_deleteMouseEntered
+
+    private void refMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refMouseClicked
+        displayData();
+    }//GEN-LAST:event_refMouseClicked
+
+    private void refMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refMouseEntered
+        ref.setBackground(bodycolor);
+    }//GEN-LAST:event_refMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -270,7 +488,11 @@ public class Documents extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton add;
     private javax.swing.JLabel close;
+    private javax.swing.JTable dcm;
+    private javax.swing.JButton delete;
+    private javax.swing.JButton edit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -279,9 +501,15 @@ public class Documents extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton lg;
     private javax.swing.JLabel minimize;
+    private javax.swing.JButton ref;
+    private javax.swing.JButton search;
     // End of variables declaration//GEN-END:variables
 }
+   
