@@ -1,14 +1,10 @@
 
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import config.dbConnector; // Assuming you have this class
-import javax.swing.WindowConstants;
 import net.proteanit.sql.DbUtils;
 
 /*
@@ -30,6 +26,8 @@ public class Accounts extends javax.swing.JFrame {
     public Accounts() {
         initComponents();
     }
+private citizenform addFormInstance = null;
+private userprofileupdate editFormInstance = null;
     public void displayData(){
         try{
             dbConnector dbc = new dbConnector();
@@ -387,22 +385,22 @@ public class Accounts extends javax.swing.JFrame {
         citizenform cf = new citizenform();
 
         // Check if the form was created successfully
-        if (cf == null) {
-            JOptionPane.showMessageDialog(null, "Error: Unable to open citizen form.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        if (addFormInstance == null || !addFormInstance.isVisible()) {
+        addFormInstance = new citizenform();
+        addFormInstance.save.setText("SAVE");
+        addFormInstance.action = "Add";
+        addFormInstance.setVisible(true);
 
-        // Ensure the save button exists before modifying it
-        if (cf.save != null) {
-            cf.save.setText("SAVE");
-            cf.action = "Add";
-        } else {
-            JOptionPane.showMessageDialog(null, "Error: Save button is not initialized in citizenform.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        // Reset to null when form is closed
+        addFormInstance.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                addFormInstance = null;
+            }
+        });
+    } else {
+        addFormInstance.toFront();
         }
-
-        // Show the form
-        cf.setVisible(true);
     }//GEN-LAST:event_addMouseClicked
 
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
@@ -410,35 +408,30 @@ public class Accounts extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseEntered
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        int rowindex = accs.getSelectedRow();
+    int rowindex = accs.getSelectedRow();
 
-        if (rowindex < 0) {
-            JOptionPane.showMessageDialog(null, "Please select an item to edit.");
-            return;
-        }
+    if (rowindex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select a user to edit.");
+        return;
+    }
 
-        TableModel model = accs.getModel();
-        citizenform cf = new citizenform(); // Ensure form is initialized
+    TableModel model = accs.getModel();
+    String userId = model.getValueAt(rowindex, 0).toString();
 
-        // Ensure UI components are initialized before setting values
-        if (cf.cid == null || cf.cfname == null || cf.clname == null || cf.cgender == null ||
-            cf.cemail == null || cf.caddress == null || cf.cstatus == null || cf.ccontacts == null) {
-            JOptionPane.showMessageDialog(null, "Error: Form components are not initialized!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (editFormInstance == null || !editFormInstance.isVisible()) {
+        editFormInstance = new userprofileupdate(userId);
+        editFormInstance.setVisible(true);
 
-        cf.cid.setText("" + model.getValueAt(rowindex, 0));
-        cf.cfname.setText("" + model.getValueAt(rowindex, 1));
-        cf.clname.setText("" + model.getValueAt(rowindex, 2));
-        cf.cgender.setSelectedItem(model.getValueAt(rowindex, 3).toString());
-        cf.cemail.setText("" + model.getValueAt(rowindex, 4).toString());
-        cf.caddress.setText("" + model.getValueAt(rowindex, 5).toString());
-        cf.cstatus.setText("" + model.getValueAt(rowindex, 6).toString());
-        cf.ccontacts.setText("" + model.getValueAt(rowindex, 7).toString());
-
-        cf.setVisible(true);
-        cf.action = "Update";
-        cf.save.setText("Update");
+        // Reset to null when form is closed
+        editFormInstance.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                editFormInstance = null;
+            }
+        });
+    } else {
+        editFormInstance.toFront();
+    }
     }//GEN-LAST:event_editMouseClicked
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
